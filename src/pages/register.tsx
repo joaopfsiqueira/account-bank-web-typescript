@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import { createUser, loginUser } from './api/hello';
 import { InputField } from '../components/InputField';
 import { useRouter } from 'next/router';
+import { toErrorMap } from '../utils/toErrorMap';
 
 interface registerProps {}
 
@@ -33,15 +34,21 @@ const register: React.FC<registerProps> = ({}) => {
           <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
             <Formik
               initialValues={{ username: '', password: '' }}
-              onSubmit={async (values) => {
+              onSubmit={async (values, { setErrors }) => {
                 // actions.setSubmitting(false);
                 const res = await createUser({
                   password: values.password,
                   username: values.username,
                 });
 
-                if (res.Message === 'Usuário criado com sucesso!') {
+                if (res.Message != 'Usuário criado com sucesso!') {
+                  setErrors(toErrorMap(res));
+                } else {
+                  //worked.
                   router.push('/login');
+                }
+
+                if (res.Message === 'Usuário criado com sucesso!') {
                 }
                 if (
                   res.Message ===
