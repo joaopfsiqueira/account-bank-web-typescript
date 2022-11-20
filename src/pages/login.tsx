@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { createUser, loginUser } from './api/hello';
+import { createUser, loginUser } from './api/Apis';
 import { InputField } from '../components/InputField';
 import { useRouter } from 'next/router';
 import { toErrorMap } from '../utils/toErrorMap';
@@ -41,10 +41,8 @@ const login: React.FC<loginProps> = ({}) => {
                   username: values.username,
                 });
 
-                console.log(res);
                 if (res.token) {
-                  const token = res.token;
-                  router.push('/', token);
+                  router.push('/');
                 } else {
                   setErrors(toErrorMap(res));
                 }

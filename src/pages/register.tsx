@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { createUser, loginUser } from './api/hello';
+import { createUser, loginUser } from './api/Apis';
 import { InputField } from '../components/InputField';
 import { useRouter } from 'next/router';
 import { toErrorMap } from '../utils/toErrorMap';
@@ -45,6 +45,7 @@ const register: React.FC<registerProps> = ({}) => {
                   setErrors(toErrorMap(res));
                 } else {
                   //worked.
+                  alert('Usuário cadastrado com sucesso!');
                   router.push('/login');
                 }
               }}
