@@ -1,26 +1,46 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@layer base {
+  [type='text'],
+  [type='usernameOrEmail'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,
+  select {
+    @apply w-full border-gray-400 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-[#9B46EB];
   }
-  body {
-    color: white;
-    background: black;
+  [type='checkbox'],
+  [type='radio'] {
+    @apply border-gray-300 rounded text-indigo-600 focus:ring-[#9B46EB];
+  }
+}
+
+/* Paletas : 
+#32363f
+#222327
+#6085dd
+#91b9f7
+*/
+@layer utilities {
+  .icon-button {
+    @apply w-10 h-10 justify-center border border-transparent rounded-md shadow-sm text-white dark:bg-[#6085dd] dark:hover:bg-[#91b9f7] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-indigo-500
+    bg-[#b29e94] hover:bg-[#b29e94]/70;
+  }
+
+  button:checked ~ .dot {
+    transform: translateX(100%);
+    background-color: #48bb78;
   }
 }
