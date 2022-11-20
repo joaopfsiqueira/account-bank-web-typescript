@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import { createUser, loginUser } from './api/hello';
 import { InputField } from '../components/InputField';
 import { useRouter } from 'next/router';
+import { toErrorMap } from '../utils/toErrorMap';
 
 interface loginProps {}
 
@@ -33,7 +34,7 @@ const login: React.FC<loginProps> = ({}) => {
           <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
             <Formik
               initialValues={{ username: '', password: '' }}
-              onSubmit={async (values) => {
+              onSubmit={async (values, { setErrors }) => {
                 // actions.setSubmitting(false);
                 const res = await loginUser({
                   password: values.password,
@@ -44,12 +45,8 @@ const login: React.FC<loginProps> = ({}) => {
                 if (res.token) {
                   const token = res.token;
                   router.push('/', token);
-                }
-                if (
-                  res.Message === 'Username incorreto!' ||
-                  res.Message === 'Senha errada!'
-                ) {
-                  alert('Usuário ou Senha incorretos!');
+                } else {
+                  setErrors(toErrorMap(res));
                 }
               }}
             >

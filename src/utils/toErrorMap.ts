@@ -21,6 +21,15 @@ export const toErrorMap = (errors: Erro) => {
     errorMap[errors.field] = errors.Message;
     return errorMap;
   }
+
+  if (errors.Message.includes('Usuário ou senha incorretos!')) {
+    errors.field = 'password';
+    errors.Message = 'Usuário ou senha incorretos!';
+
+    errorMap[errors.field] = errors.Message;
+    return errorMap;
+  }
+
   errorMap[errors.field] = errors.Message;
   return errorMap;
 };
