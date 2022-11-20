@@ -47,20 +47,6 @@ const register: React.FC<registerProps> = ({}) => {
                   //worked.
                   router.push('/login');
                 }
-
-                if (res.Message === 'Usuário criado com sucesso!') {
-                }
-                if (
-                  res.Message ===
-                  'Senha deve conter ao menos 8 caracteres, uma letra maíuscula, 1 caracter especial e 1 número!'
-                ) {
-                  alert(
-                    'Senha deve conter ao menos 8 caracteres, uma letra maíuscula, 1 caracter especial e 1 número!'
-                  );
-                }
-                if (res.Message === 'Usuario já cadastrado!') {
-                  alert('Usuario já cadastrado!');
-                }
               }}
             >
               <Form className="mb-0 space-y-6">
