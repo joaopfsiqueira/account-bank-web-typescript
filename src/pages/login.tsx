@@ -4,9 +4,9 @@ import { createUser, loginUser } from './api/hello';
 import { InputField } from '../components/InputField';
 import { useRouter } from 'next/router';
 
-interface registerProps {}
+interface loginProps {}
 
-const register: React.FC<registerProps> = ({}) => {
+const login: React.FC<loginProps> = ({}) => {
   const router = useRouter();
 
   return (
@@ -40,8 +40,10 @@ const register: React.FC<registerProps> = ({}) => {
                   username: values.username,
                 });
 
-                if (res.Message === 'Usuário criado com sucesso!') {
-                  router.push('/');
+                console.log(res);
+                if (res.token) {
+                  const token = res.token;
+                  router.push('/', token);
                 }
                 if (
                   res.Message === 'Username incorreto!' ||
@@ -103,4 +105,4 @@ const register: React.FC<registerProps> = ({}) => {
     </>
   );
 };
-export default register;
+export default login;
