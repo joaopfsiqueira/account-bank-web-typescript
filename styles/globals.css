@@ -26,13 +26,6 @@
     @apply border-gray-300 rounded text-indigo-600 focus:ring-[#9B46EB];
   }
 }
-
-/* Paletas : 
-#32363f
-#222327
-#6085dd
-#91b9f7
-*/
 @layer utilities {
   .icon-button {
     @apply w-10 h-10 justify-center border border-transparent rounded-md shadow-sm text-white dark:bg-[#6085dd] dark:hover:bg-[#91b9f7] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-indigo-500
