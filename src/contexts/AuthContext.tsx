@@ -23,7 +23,7 @@ export const AuthContext = createContext({} as AuthContextType);
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<UserToken | any>(null);
 
-  const isAuthenticated = false;
+  const isAuthenticated = !!user;
 
   async function signIn(body: Body) {
     const { token, username } = await loginUser({

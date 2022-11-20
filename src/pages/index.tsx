@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
-import { createUser, loginUser } from './api/Apis';
 import { InputField } from '../components/InputField';
 import { useRouter } from 'next/router';
 import { toErrorMap } from '../utils/toErrorMap';
+import { AuthContext } from '../contexts/AuthContext';
 
 interface loginProps {}
 
 const login: React.FC<loginProps> = ({}) => {
   const router = useRouter();
+
+  const { signIn } = useContext(AuthContext);
 
   return (
     <>
@@ -36,16 +38,17 @@ const login: React.FC<loginProps> = ({}) => {
               initialValues={{ username: '', password: '' }}
               onSubmit={async (values, { setErrors }) => {
                 // actions.setSubmitting(false);
-                const res = await loginUser({
+                const res = await signIn({
                   password: values.password,
                   username: values.username,
                 });
 
-                if (res.token) {
-                  router.push('/');
-                } else {
-                  setErrors(toErrorMap(res));
-                }
+                console.log(res);
+                // if (res.token) {
+                //   router.push('/');
+                // } else {
+                //   setErrors(toErrorMap(res));
+                // }
               }}
             >
               <Form className="mb-0 space-y-6">
