@@ -14,17 +14,17 @@ const register: React.FC<registerProps> = ({}) => {
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Crie sua conta
+            Acesse sua conta
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
-            Já tem conta?
+            Não tem conta?
             <a
-              href="/login"
+              href="/register"
               className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none
           focus:ring-2 focus:ring-indigo-500"
             >
               {' '}
-              Logue
+              Cadastre-se
             </a>
           </p>
         </div>
@@ -35,24 +35,19 @@ const register: React.FC<registerProps> = ({}) => {
               initialValues={{ username: '', password: '' }}
               onSubmit={async (values) => {
                 // actions.setSubmitting(false);
-                const res = await createUser({
+                const res = await loginUser({
                   password: values.password,
                   username: values.username,
                 });
 
                 if (res.Message === 'Usuário criado com sucesso!') {
-                  router.push('/login');
+                  router.push('/');
                 }
                 if (
-                  res.Message ===
-                  'Senha deve conter ao menos 8 caracteres, uma letra maíuscula, 1 caracter especial e 1 número!'
+                  res.Message === 'Username incorreto!' ||
+                  res.Message === 'Senha errada!'
                 ) {
-                  alert(
-                    'Senha deve conter ao menos 8 caracteres, uma letra maíuscula, 1 caracter especial e 1 número!'
-                  );
-                }
-                if (res.Message === 'Usuario já cadastrado!') {
-                  alert('Usuario já cadastrado!');
+                  alert('Usuário ou Senha incorretos!');
                 }
               }}
             >
@@ -98,7 +93,7 @@ const register: React.FC<registerProps> = ({}) => {
                   type="submit"
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Registrar
+                  Logar
                 </button>
               </Form>
             </Formik>
