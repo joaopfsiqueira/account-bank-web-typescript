@@ -46,7 +46,7 @@ const register: React.FC<registerProps> = ({}) => {
                 } else {
                   //worked.
                   alert('Usuário cadastrado com sucesso!');
-                  router.push('/login');
+                  router.push('/l');
                 }
               }}
             >
