@@ -13,6 +13,14 @@ export const toErrorMap = (errors: Erro) => {
     errorMap[errors.field] = errors.Message;
     return errorMap;
   }
+
+  if (errors.Message.includes('Usuario já cadastrado!')) {
+    errors.field = 'username';
+    errors.Message = 'Usuario já cadastrado!';
+
+    errorMap[errors.field] = errors.Message;
+    return errorMap;
+  }
   errorMap[errors.field] = errors.Message;
   return errorMap;
 };
