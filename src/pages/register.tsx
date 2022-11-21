@@ -20,7 +20,7 @@ const register: React.FC<registerProps> = ({}) => {
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
             Já tem conta?
             <a
-              href="/login"
+              href="/"
               className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none
           focus:ring-2 focus:ring-indigo-500"
             >
@@ -46,7 +46,7 @@ const register: React.FC<registerProps> = ({}) => {
                 } else {
                   //worked.
                   alert('Usuário cadastrado com sucesso!');
-                  router.push('/l');
+                  router.push('/');
                 }
               }}
             >

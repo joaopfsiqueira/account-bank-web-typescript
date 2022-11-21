@@ -1,14 +1,14 @@
-import { createContext, useState } from 'react';
-import { loginUser } from '../pages/api/Apis';
-import { setCookie } from 'nookies'; //usando nookies para salvar os cookies.
+import { createContext, useEffect, useState } from 'react';
+import { loginUser, userInformations } from '../pages/api/Apis';
+import { setCookie, parseCookies } from 'nookies'; //usando nookies para salvar os cookies. // lendo os cookies com parseCookies
 import Router from 'next/router';
 
 type UserToken = {
-  username: any;
+  username: string;
 };
 
 type AuthContextType = {
-  user: UserToken;
+  user: UserToken | null;
   isAuthenticated: boolean;
   signIn: (body: Body) => Promise<void>;
 };
@@ -21,12 +21,23 @@ type Body = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: any) {
-  const [user, setUser] = useState<UserToken | any>(null);
+  const [user, setUser] = useState<UserToken | null>(null);
 
   const isAuthenticated = !!user;
 
+  //assim que o componente for criado, vai disparar a função abaixo.
+  // vou checar se o token já existe,
+  useEffect(() => {
+    // renomeando nosso token para apenas token
+    const { 'account-bank-token': token } = parseCookies();
+
+    if (token) {
+      userInformations(token).then((response) => setUser(response.username));
+    }
+  }, []);
+
   async function signIn(body: Body) {
-    const { token, username } = await loginUser({
+    const { username, token } = await loginUser({
       password: body.password,
       username: body.username,
     });

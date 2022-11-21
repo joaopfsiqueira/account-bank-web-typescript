@@ -43,8 +43,9 @@ const login: React.FC<loginProps> = ({}) => {
                   username: values.username,
                 });
 
-                console.log(res);
-                // if (res.token) {
+                // console.log(res);
+
+                // if (res.token !== null) {
                 //   router.push('/');
                 // } else {
                 //   setErrors(toErrorMap(res));
