@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { InputField } from '../components/InputField';
 import { useRouter } from 'next/router';
@@ -8,19 +8,13 @@ import { AuthContext } from '../contexts/AuthContext';
 interface loginProps {}
 
 const login: React.FC<loginProps> = ({}) => {
+  const [erro, setErro] = useState<Boolean>(false);
   const router = useRouter();
 
   const { signIn } = useContext(AuthContext);
 
   return (
     <>
-      <div className=" bg-gray-100 flex justify-center py-1 px-1 lg:px-">
-        <h1 className="mt-6 text-center text-4xl font-extrabold text-indigo-500 hover:text-indigo-700">
-          {' '}
-          Account Bank
-        </h1>
-      </div>
-
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-10 px-4 lg:px-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
@@ -50,13 +44,15 @@ const login: React.FC<loginProps> = ({}) => {
                   username: values.username,
                 });
 
-                // console.log(res);
-
-                // if (res.token !== null) {
-                //   router.push('/');
-                // } else {
-                //   setErrors(toErrorMap(res));
-                // }
+                if (res !== undefined) {
+                  router.push('/homepage');
+                } else {
+                  setErro(true);
+                  let field = 'password';
+                  let Message = 'Usuário ou senha incorretos!';
+                  setErrors(toErrorMap(field, Message, erro));
+                  // setErrors(toErrorMap(res));
+                }
               }}
             >
               <Form className="mb-0 space-y-6">

@@ -47,7 +47,6 @@ export function AuthProvider({ children }: any) {
     });
 
     setUser(username);
-    Router.push('/homepage');
   }
 
   return (
