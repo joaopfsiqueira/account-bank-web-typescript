@@ -14,9 +14,16 @@ const login: React.FC<loginProps> = ({}) => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 px-6 lg:px-8">
+      <div className=" bg-gray-100 flex justify-center py-1 px-1 lg:px-">
+        <h1 className="mt-6 text-center text-4xl font-extrabold text-indigo-500 hover:text-indigo-700">
+          {' '}
+          Account Bank
+        </h1>
+      </div>
+
+      <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-10 px-4 lg:px-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
             Acesse sua conta
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
