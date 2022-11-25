@@ -2,13 +2,13 @@ import React, { useContext, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { InputField } from '../components/InputField';
 import { useRouter } from 'next/router';
-import { toErrorMap } from '../utils/toErrorMap';
+import { toErrorMap } from '../utils/toErrorMapLogin';
 import { AuthContext } from '../contexts/AuthContext';
 
 interface loginProps {}
 
 const login: React.FC<loginProps> = ({}) => {
-  const [erro, setErro] = useState<Boolean>(false);
+  const [erro, setErro] = useState<boolean>(false);
   const router = useRouter();
 
   const { signIn } = useContext(AuthContext);
@@ -44,8 +44,9 @@ const login: React.FC<loginProps> = ({}) => {
                   username: values.username,
                 });
 
-                if (res !== undefined) {
-                  router.push('/homepage');
+                console.log(res);
+                if (res !== null) {
+                  router.push('/dashboard');
                 } else {
                   setErro(true);
                   let field = 'password';
