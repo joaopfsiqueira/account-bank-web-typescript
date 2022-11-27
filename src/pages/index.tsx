@@ -44,15 +44,13 @@ const login: React.FC<loginProps> = ({}) => {
                   username: values.username,
                 });
 
-                console.log(res);
-                if (res !== null) {
+                if (!res) {
                   router.push('/dashboard');
                 } else {
                   setErro(true);
                   let field = 'password';
                   let Message = 'Usuário ou senha incorretos!';
                   setErrors(toErrorMap(field, Message, erro));
-                  // setErrors(toErrorMap(res));
                 }
               }}
             >
