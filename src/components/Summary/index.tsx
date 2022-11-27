@@ -5,65 +5,72 @@ import { useTransactions } from '../../hooks/useTransactions';
 import { Container } from './styles';
 
 const Summary: React.FC = () => {
-  const { transactions } = useTransactions();
+  const {
+    transactionsCashin,
+    transactionsCashout,
+    filterCashin,
+    filterCashout,
+    clearFilter,
+  } = useTransactions();
 
   const summaryData = useMemo(() => {
-    return transactions.reduce(
-      (acc, transaction) => {
-        if ('deposit') {
-          acc.income += transaction.value;
-        } else {
-          acc.outcome += transaction.value;
-        }
-        acc.total = acc.income - acc.outcome;
-
-        return acc;
-      },
-      {
-        income: 0,
-        outcome: 0,
-        total: 0,
-      }
-    );
-  }, [transactions]);
+    const income = transactionsCashin.reduce((acc, currentTransaction) => {
+      return acc + currentTransaction.value;
+    }, 0);
+    const outcome = transactionsCashout.reduce((acc, currentTransaction) => {
+      return acc + currentTransaction.value;
+    }, 0);
+    const total = income - outcome;
+    return {
+      income,
+      outcome,
+      total,
+    };
+  }, [transactionsCashin, transactionsCashout]);
 
   return (
     <Container>
       <div>
-        <header>
-          <p>Entradas</p>
-        </header>
-        <strong>
-          {new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(summaryData.income)}
-        </strong>
+        <button onClick={filterCashin}>
+          <header>
+            <p>Entradas</p>
+          </header>
+          <strong>
+            {new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+            }).format(summaryData.income)}
+          </strong>
+        </button>
       </div>
 
       <div>
-        <header>
-          <p>Saídas</p>
-        </header>
-        <strong>
-          -
-          {new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(summaryData.outcome)}
-        </strong>
+        <button onClick={filterCashout}>
+          <header>
+            <p>Saídas</p>
+          </header>
+          <strong>
+            -
+            {new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+            }).format(summaryData.outcome)}
+          </strong>
+        </button>
       </div>
 
       <div className="highlight-background">
-        <header>
-          <p>Total</p>
-        </header>
-        <strong>
-          {new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(summaryData.total)}
-        </strong>
+        <button onClick={clearFilter}>
+          <header>
+            <p>Total</p>
+          </header>
+          <strong>
+            {new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+            }).format(summaryData.total)}
+          </strong>
+        </button>
       </div>
     </Container>
   );
