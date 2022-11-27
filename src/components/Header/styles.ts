@@ -13,9 +13,14 @@ export const Content = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  input {
+    width: 10rem;
+    height: 3rem;
+  }
+
   button {
     font-size: 1rem;
-    color: #FFF;
+    color: #fff;
     background: var(--blue-light);
     border: 0;
     padding: 0 2rem;
