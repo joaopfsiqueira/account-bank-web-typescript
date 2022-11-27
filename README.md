@@ -19,3 +19,5 @@ Na tela inicial, poderá ver todos as suas transações e seu saldo atual.
 Caso queira filtrar por data, utilize o filtro que fica no topo da página!
 
 Caso queira visualizar apenas os Cashin ou Cashouts, clique em "Entrada" ou "Saída"
+
+Caso queira transaferir seu saldo para outro usuário, basta clicar em "Nova Transação", certifique-se de que tenha saldo e que o usuário exista!
