@@ -1,6 +1,7 @@
+import type { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 import { useState } from 'react';
 import Modal from 'react-modal';
-
 import Dashboard from '../components/Dashboard';
 import Header from '../components/Header';
 import NewTransactionModal from '../components/NewTransactionModal';
@@ -32,3 +33,20 @@ export default function App() {
     </TransactionsProvider>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['account-bank-token']: token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
