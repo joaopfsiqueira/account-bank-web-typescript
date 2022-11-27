@@ -170,16 +170,16 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
 
   async function filterByDate(date: string): Promise<void> {
     const { 'account-bank-token': token } = parseCookies();
-    const res = await fetch('http://localhost:4000/transactions/user/bydate', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-      body: JSON.stringify({
-        date,
-      }),
-      method: 'GET',
-    });
+    const res = await fetch(
+      `http://localhost:4000/transactions/user/bydate?date=${date}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+        method: 'GET',
+      }
+    );
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
     const result = await res.json();
