@@ -1,12 +1,15 @@
 import React from 'react';
 
-import { useTransactions } from '../../hooks/useTransactions';
-
 import { Container } from './styles';
+import { Transaction } from '../../hooks/useTransactions';
 
-const TransactionsTable: React.FC = () => {
-  const { transactions } = useTransactions();
+interface TransactionsTableProps {
+  transactions: Transaction[];
+}
 
+const TransactionsTable: React.FC<TransactionsTableProps> = ({
+  transactions,
+}) => {
   return (
     <Container>
       <table>
