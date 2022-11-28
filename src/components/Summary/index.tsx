@@ -65,7 +65,7 @@ const Summary: React.FC = () => {
       <div className="highlight-background">
         <button onClick={clearFilter}>
           <header>
-            <p>Total</p>
+            <p>Saldo Bancário</p>
           </header>
           <strong>
             {new Intl.NumberFormat('pt-BR', {
