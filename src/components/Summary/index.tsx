@@ -21,7 +21,9 @@ const Summary: React.FC = () => {
     const outcome = transactionsCashout.reduce((acc, currentTransaction) => {
       return acc + currentTransaction.value;
     }, 0);
-    const total = balance;
+    const total = balance.reduce((acc, currentBalance) => {
+      return acc + currentBalance.balance;
+    }, 0);
     return {
       income,
       outcome,
