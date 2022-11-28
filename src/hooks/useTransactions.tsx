@@ -11,10 +11,10 @@ interface TransactionsContextData {
   transactions: Transaction[];
   transactionsCashin: Transaction[];
   transactionsCashout: Transaction[];
+  balance: Balance[];
   filterCashin(): Promise<void>;
   filterCashout(): Promise<void>;
   clearFilter(): Promise<void>;
-  userBalance(): Promise<void>;
   filterByDate(date: string): Promise<void>;
   createTransaction(transaction: TransactionInput): Promise<void>;
 }
@@ -213,20 +213,24 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
     const result = await res.json();
     setTransactions(result);
   }
-  async function userBalance(): Promise<void> {
-    const { 'account-bank-token': token } = parseCookies();
-    const res = await fetch('http://localhost:4000/users/balance', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-      method: 'GET',
-    });
-    // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
-    const result = await res.json();
-    setBalance(result);
-  }
+
+  useEffect(() => {
+    (async function userBalance(): Promise<any> {
+      const { 'account-bank-token': token } = parseCookies();
+      const res = await fetch('http://localhost:4000/users/balance', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+        method: 'GET',
+      });
+      // The return value is *not* serialized
+      // You can return Date, Map, Set, etc.
+      const result = await res.json();
+      setBalance(result.balance);
+    })();
+  }, [balance]);
+
   return (
     <TransactionsContext.Provider
       value={{
@@ -238,7 +242,7 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
         filterCashout,
         clearFilter,
         filterByDate,
-        userBalance,
+        balance,
       }}
     >
       {children}

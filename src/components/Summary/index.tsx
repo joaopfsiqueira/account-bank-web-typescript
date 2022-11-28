@@ -11,6 +11,7 @@ const Summary: React.FC = () => {
     filterCashin,
     filterCashout,
     clearFilter,
+    balance,
   } = useTransactions();
 
   const summaryData = useMemo(() => {
@@ -20,13 +21,13 @@ const Summary: React.FC = () => {
     const outcome = transactionsCashout.reduce((acc, currentTransaction) => {
       return acc + currentTransaction.value;
     }, 0);
-    const total = income - outcome;
+    const total = balance;
     return {
       income,
       outcome,
       total,
     };
-  }, [transactionsCashin, transactionsCashout]);
+  }, [transactionsCashin, transactionsCashout, balance]);
 
   return (
     <Container>
