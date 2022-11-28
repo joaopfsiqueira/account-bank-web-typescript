@@ -32,7 +32,7 @@ export interface Transaction {
 }
 
 export interface Balance {
-  balance: string;
+  balance: number;
   id: string;
   username: string;
 }
@@ -227,7 +227,7 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
       // The return value is *not* serialized
       // You can return Date, Map, Set, etc.
       const result = await res.json();
-      setBalance(result.balance);
+      setBalance(result);
     })();
   }, [balance]);
 
