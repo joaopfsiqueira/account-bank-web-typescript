@@ -14,6 +14,7 @@ interface TransactionsContextData {
   filterCashin(): Promise<void>;
   filterCashout(): Promise<void>;
   clearFilter(): Promise<void>;
+  userBalance(): Promise<void>;
   filterByDate(date: string): Promise<void>;
   createTransaction(transaction: TransactionInput): Promise<void>;
 }
@@ -30,6 +31,12 @@ export interface Transaction {
   createdAt: string;
 }
 
+export interface Balance {
+  balance: string;
+  id: string;
+  username: string;
+}
+
 type TransactionInput = {
   value: number;
   creditedUsername: string;
@@ -43,6 +50,7 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
   children,
 }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [balance, setBalance] = useState<Balance[]>([]);
   const [transactionsCashin, setTransactionsCashin] = useState<Transaction[]>(
     []
   );
@@ -183,6 +191,11 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
     const result = await res.json();
+
+    console.log(result);
+    if (result.Message) {
+      setTransactions([]);
+    }
     setTransactions(result);
   }
 
@@ -200,7 +213,20 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
     const result = await res.json();
     setTransactions(result);
   }
-
+  async function userBalance(): Promise<void> {
+    const { 'account-bank-token': token } = parseCookies();
+    const res = await fetch('http://localhost:4000/users/balance', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      method: 'GET',
+    });
+    // The return value is *not* serialized
+    // You can return Date, Map, Set, etc.
+    const result = await res.json();
+    setBalance(result);
+  }
   return (
     <TransactionsContext.Provider
       value={{
@@ -212,6 +238,7 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
         filterCashout,
         clearFilter,
         filterByDate,
+        userBalance,
       }}
     >
       {children}
