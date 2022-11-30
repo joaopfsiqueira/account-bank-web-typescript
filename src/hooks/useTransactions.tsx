@@ -11,7 +11,7 @@ interface TransactionsContextData {
   transactions: Transaction[];
   transactionsCashin: Transaction[];
   transactionsCashout: Transaction[];
-  balance: Balance[];
+  balance: Balance;
   filterCashin(): Promise<void>;
   filterCashout(): Promise<void>;
   clearFilter(): Promise<void>;
@@ -50,7 +50,7 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
   children,
 }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [balance, setBalance] = useState<Balance[]>([]);
+  const [balance, setBalance] = useState<Balance>({} as Balance);
   const [transactionsCashin, setTransactionsCashin] = useState<Transaction[]>(
     []
   );
@@ -72,6 +72,20 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
       // You can return Date, Map, Set, etc.
       const result = await res.json();
       setTransactions(result);
+    })();
+    (async function userBalance(): Promise<void> {
+      const { 'account-bank-token': token } = parseCookies();
+      const res = await fetch('http://localhost:4000/users/balance', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+        method: 'GET',
+      });
+      // The return value is *not* serialized
+      // You can return Date, Map, Set, etc.
+      const result = await res.json();
+      setBalance(result);
     })();
   }, []);
 
@@ -214,27 +228,11 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
     setTransactions(result);
   }
 
-  useEffect(() => {
-    (async function userBalance(): Promise<any> {
-      const { 'account-bank-token': token } = parseCookies();
-      const res = await fetch('http://localhost:4000/users/balance', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-        method: 'GET',
-      });
-      // The return value is *not* serialized
-      // You can return Date, Map, Set, etc.
-      const result = await res.json();
-      setBalance(result);
-    })();
-  }, [balance]);
-
   return (
     <TransactionsContext.Provider
       value={{
         transactions,
+        balance,
         createTransaction,
         transactionsCashout,
         transactionsCashin,
@@ -242,7 +240,6 @@ export const TransactionsProvider: React.FC<TransactionsProviderProps> = ({
         filterCashout,
         clearFilter,
         filterByDate,
-        balance,
       }}
     >
       {children}
