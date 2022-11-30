@@ -22,7 +22,7 @@ const NewTransactionModal: React.FC<NewTransactionModalProp> = ({
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
-    await createTransaction({
+    const transaction = await createTransaction({
       value,
       creditedUsername,
     });
