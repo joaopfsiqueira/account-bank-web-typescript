@@ -1,7 +1,9 @@
 ## Getting Started
 
-Primeiro, rode o servidor de desenvolvimento:
+Primeiro, rode o server: [Server](https://github.com/joaopfsiqueira/account-bank-server-typescript)
 
+
+Depois, basta rodar:
 ```bash
 npm run dev
 # or
